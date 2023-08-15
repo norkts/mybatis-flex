@@ -73,6 +73,9 @@ public class TableInfo {
     //数据更新时，默认更新内容的字段
     private Map<String, String> onUpdateColumns;
 
+    //更新时，不更新的字段
+    private Set<String> onUpdateIgnoreColumns;
+
     //大字段列
     private String[] largeColumns = new String[0];
 
@@ -540,6 +543,10 @@ public class TableInfo {
                     continue;
                 }
 
+                if (onUpdateIgnoreColumns != null && onUpdateIgnoreColumns.contains(column)) {
+                    continue;
+                }
+
                 //过滤乐观锁字段 和 租户字段
                 if (ObjectUtil.equalsAny(column, versionColumn, tenantIdColumn)) {
                     continue;
@@ -562,6 +569,10 @@ public class TableInfo {
         else {
             for (String column : this.columns) {
                 if (onUpdateColumns != null && onUpdateColumns.containsKey(column)) {
+                    continue;
+                }
+
+                if (onUpdateIgnoreColumns != null && onUpdateIgnoreColumns.contains(column)) {
                     continue;
                 }
 
@@ -615,6 +626,10 @@ public class TableInfo {
                 if (onUpdateColumns != null && onUpdateColumns.containsKey(column)) {
                     continue;
                 }
+
+                if (onUpdateIgnoreColumns != null && onUpdateIgnoreColumns.contains(column)) {
+                    continue;
+                }
                 //过滤乐观锁字段 和 租户字段
                 if (ObjectUtil.equalsAny(column, versionColumn, tenantIdColumn)) {
                     continue;
@@ -653,6 +668,9 @@ public class TableInfo {
 
             for (String column : this.columns) {
                 if (onUpdateColumns != null && onUpdateColumns.containsKey(column)) {
+                    continue;
+                }
+                if (onUpdateIgnoreColumns != null && onUpdateIgnoreColumns.contains(column)) {
                     continue;
                 }
 
@@ -1257,4 +1275,11 @@ public class TableInfo {
         return columnQueryMapping.get(column);
     }
 
+    public Set<String> getOnUpdateIgnoreColumns() {
+        return onUpdateIgnoreColumns;
+    }
+
+    public void setOnUpdateIgnoreColumns(Set<String> onUpdateIgnoreColumns) {
+        this.onUpdateIgnoreColumns = onUpdateIgnoreColumns;
+    }
 }

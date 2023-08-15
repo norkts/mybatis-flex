@@ -52,6 +52,12 @@ public @interface Column {
     String onUpdateValue() default "";
 
     /**
+     * 更新时忽略该字段
+     * @return
+     */
+    boolean onUpdateIgnore() default false;
+
+    /**
      * 是否是大字段，大字段 APT 不会生成到 DEFAULT_COLUMNS 里。
      */
     boolean isLarge() default false;

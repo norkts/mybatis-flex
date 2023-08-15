@@ -187,6 +187,8 @@ public class TableInfoFactory {
         //数据更新时，默认更新内容的字段
         Map<String, String> onUpdateColumns = new HashMap<>();
 
+        Set<String> onUpdateIgnore = new HashSet<>();
+
         //大字段列
         Set<String> largeColumns = new LinkedHashSet<>();
 
@@ -271,6 +273,10 @@ public class TableInfoFactory {
 
             if (column != null && StringUtil.isNotBlank(column.onUpdateValue())) {
                 onUpdateColumns.put(columnName, column.onUpdateValue().trim());
+            }
+
+            if (column != null && column.onUpdateIgnore()) {
+                onUpdateIgnore.add(columnName);
             }
 
 
